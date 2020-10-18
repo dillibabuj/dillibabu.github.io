@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz</title>
+    <!-- <script src="https://d3js.org/d3.v6.min.js"></script> -->
+<script src="js/d3.v6.min.js"></script>
+<style>
+    body{
+        background-color: rgb(255, 255, 255);
+    }
+    ul {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+    font-size: 2rem;
+}
+
+h2{
+    text-align: center;
+    width: 50%;
+}
+    li {
+	position: relative;
+	padding: 1rem 1rem;
+	margin: 0 0 2px 0;
+	font-size: 2.5rem;
+	line-height: 1;
+	border-top: 1px solid #ccc;
+	text-align: center;
+	cursor: pointer;
+    width: 50%;
+    }
+    li.right{
+        background-color: greenyellow;
+    }
+    li.wrong{
+        background-color: red;
+    }
+    
+    li.right:after {
+	    content: '✔';
+
+    }
+    li.wrong:after {
+	    content: '✘';
+        
+    }
+    button{
+        width: 50%;
+        background: #2166ac;
+    	border-radius: 3px;
+        color: #fff;
+        cursor: pointer;
+        border: none;
+        font-size: 1.8rem;
+        line-height: 1;
+        padding: .2rem .8rem;
+    }
+
+    #score {
+        font-size: 2rem;
+    }
+
+    #scoreCard{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 3rem;
+        margin-top:90px;
+    }
+    
+
+</style>
+</head>
+<body>
+    <div id="score" style="display: inline;">Score : <strong>0</strong></div>
+
+    <div class="qstContainer">
+        <h2></h2>
+        <ul></ul>
+    </div>
+    <button >Next</button>
+    <div id="scoreCard"></div>
+
+<script>
+    var questions;
+    var i=0;
+    var score =0;
+    const qstn = d3.select('h2')
+    const $holder = d3.select('ul')
+    const $next = d3.select('button')
+    $next.style('display', 'none');
+    d3.select('button').on('click',update)
+
+
+    d3.json("data/qna.json").then(function(d) {
+        console.log(d.Questions);
+        questions = d3.shuffle(d.Questions);
+        update()
+    });
+
+    function update(){
+
+        if (i == questions.length) {
+		    showFinalScoreCard();
+		    return;
+	    }
+        $next.style('display', 'none');
+
+        console.log(questions[i].question)
+        qstn.text(questions[i].question)
+
+        $holder.selectAll('li').remove();
+
+        const $options = $holder.selectAll('li').data(d3.shuffle(questions[i]).options);
+        console.log($options)
+
+        $options.enter().append('li')
+        .text(function(d){return d})
+        .on('click',callUpdate)
+    }
+
+    function callUpdate(){
+        if(d3.selectAll('li').classed('wrong') || d3.selectAll('li').classed('right')){
+            update();
+        }
+        else{
+            const clickEle = d3.select(this);
+        console.log(clickEle)
+        console.log(questions[i].answer)
+        if(d3.select(this).text() === questions[i].answer){
+            clickEle.attr('class','right')
+            score++;
+            console.log(d3.select('div strong').text(score));
+        }
+        else{
+            clickEle.attr('class','wrong')
+        }
+        $next.style('display', 'inline');
+        i++;
+        }
+    }
+
+    function showFinalScoreCard(){
+        d3.select('body').html('');
+        d3.select('body').append('div').attr('id','scoreCard').html(`You have scored &nbsp<strong> ${score} </strong> &nbsp out of  ${questions.length}`)
+
+    }
+
+</script>
+</body>
+</html>

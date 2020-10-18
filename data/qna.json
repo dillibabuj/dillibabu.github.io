@@ -1,0 +1,24 @@
+{
+    "Questions" :[
+    {
+        "question": "What is the capital of Telangana ?",
+        "options" : ["Secunderabad", "Hyderabad", "Warangal"],
+        "answer" : "Hyderabad"
+    },
+    {
+        "question": "What is the capital of TamilNadu ?",
+        "options" :["Chennai", "Madurai", "Vellore"],
+        "answer" : "Chennai"
+    },
+    {
+        "question": "What is the capital of Karnataka ?",
+        "options" : ["Belgaum", "Bengaluru", "Mysuru"],
+        "answer" : "Bengaluru"
+    },
+    {
+        "question": "What is the capital of Kerala ?",
+        "options" : ["Thiruvananthapuram", "Thrissur", "Kochi"],
+        "answer" : "Thiruvananthapuram"
+    }     
+]
+}
