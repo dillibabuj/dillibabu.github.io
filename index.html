@@ -65,12 +65,15 @@ h2{
     }
 
     #scoreCard{
-        display: flex;
-        align-items: center;
-        justify-content: center;
+        text-align: center;
         font-size: 3rem;
         margin-top:90px;
     }
+    #scoreCard strong{
+        color: rgb(28, 255, 7);
+        font-weight: bold;
+    }
+
 
     @media only screen and (max-width: 768px) {
         h2{
@@ -102,13 +105,13 @@ h2{
 
 <script>
     var questions;
-        var i = 0;
-        var score = 0;
-        const qstn = d3.select('h2')
-        const $holder = d3.select('ul')
-        const $next = d3.select('button')
-        $next.style('display', 'none');
-        d3.select('button').on('click', update)
+    var i = 0;
+    var score = 0;
+    const qstn = d3.select('h2')
+    const $holder = d3.select('ul')
+    const $next = d3.select('button')
+    $next.style('display', 'none');
+    d3.select('button').on('click', update)
 
 
     d3.json("data/qna.json").then(function(d) {
@@ -117,10 +120,9 @@ h2{
         update()
     });
 
-    d3.selectAll('li').on('click',validate)
+    //d3.selectAll('li').on('click',validate)
 
     function update(){
-
         if (i == questions.length) {
 		    showFinalScoreCard();
 		    return;
@@ -139,17 +141,19 @@ h2{
     }
 
     function validate(){
-        if(d3.selectAll('li').classed('wrong') || d3.selectAll('li').classed('right')){
+        console.log('validating...')
+        if(d3.selectAll('li.wrong').size() || d3.selectAll('li.right').size()){
             update();
         }
         else{
-            const clickEle = d3.select(this);
-        console.log(clickEle)
-        console.log(questions[i].answer)
-        if(d3.select(this).text() === questions[i].answer){
+        
+        const clickEle = d3.select(this);
+
+        if(clickEle.text() === questions[i].answer){
             clickEle.attr('class','right')
             score++;
-            console.log(d3.select('div strong').text(score));
+            d3.select('div strong').text(score);
+            console.log(d3.select('#score').text())
         }
         else{
             clickEle.attr('class','wrong')
@@ -161,7 +165,7 @@ h2{
 
     function showFinalScoreCard(){
         d3.select('body').html('');
-        d3.select('body').append('div').attr('id','scoreCard').html(`You have scored &nbsp<strong> ${score} </strong> &nbsp out of  ${questions.length}`)
+        d3.select('body').append('div').attr('id','scoreCard').html(`You have scored&nbsp<strong> ${score} </strong>&nbspout of  ${questions.length}`)
 
     }
 
