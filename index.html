@@ -86,13 +86,13 @@ h2{
 
 <script>
     var questions;
-    var i=0;
-    var score =0;
-    const qstn = d3.select('h2')
-    const $holder = d3.select('ul')
-    const $next = d3.select('button')
-    $next.style('display', 'none');
-    d3.select('button').on('click',update)
+        var i = 0;
+        var score = 0;
+        const qstn = d3.select('h2')
+        const $holder = d3.select('ul')
+        const $next = d3.select('button')
+        $next.style('display', 'none');
+        d3.select('button').on('click', update)
 
 
     d3.json("data/qna.json").then(function(d) {
@@ -101,6 +101,8 @@ h2{
         update()
     });
 
+    d3.selectAll('li').on('click',validate)
+
     function update(){
 
         if (i == questions.length) {
@@ -108,8 +110,6 @@ h2{
 		    return;
 	    }
         $next.style('display', 'none');
-
-        console.log(questions[i].question)
         qstn.text(questions[i].question)
 
         $holder.selectAll('li').remove();
@@ -119,10 +119,10 @@ h2{
 
         $options.enter().append('li')
         .text(function(d){return d})
-        .on('click',callUpdate)
+        .on('click',validate)
     }
 
-    function callUpdate(){
+    function validate(){
         if(d3.selectAll('li').classed('wrong') || d3.selectAll('li').classed('right')){
             update();
         }
