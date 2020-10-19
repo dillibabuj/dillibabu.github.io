@@ -50,13 +50,14 @@ h2{
     button{
         width: 50%;
         background: #2166ac;
-    	border-radius: 3px;
+    	border-radius: 30px;
         color: #fff;
         cursor: pointer;
         border: none;
         font-size: 1.8rem;
         line-height: 1;
-        padding: .2rem .8rem;
+        padding: 10px;
+        margin-top:20px;
     }
 
     #score {
@@ -70,6 +71,21 @@ h2{
         font-size: 3rem;
         margin-top:90px;
     }
+
+    @media only screen and (max-width: 768px) {
+        h2{
+            width: 100%;
+            text-align: center;
+        }
+  /* For mobile phones: */
+  li {
+    font-size: 2rem;
+    width: 100%;
+  }
+  button{
+      width: 100%;
+  }
+}
     
 
 </style>
