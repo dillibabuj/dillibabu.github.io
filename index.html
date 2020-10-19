@@ -88,6 +88,11 @@ h2{
   button{
       width: 100%;
   }
+  #scoreCard{
+        text-align: center;
+        font-size: 2rem;
+        margin-top:90px;
+    }
 }
     
 
@@ -165,7 +170,7 @@ h2{
 
     function showFinalScoreCard(){
         d3.select('body').html('');
-        d3.select('body').append('div').attr('id','scoreCard').html(`You have scored&nbsp<strong> ${score} </strong>&nbspout of  ${questions.length}`)
+        d3.select('body').append('div').attr('id','scoreCard').html(`You have scored <br><strong> ${score} </strong>&nbspout of  ${questions.length}`)
 
     }
 
